@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pushkar VIP · Doraemon Key Panel · Device Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0c15, #010101);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-video iframe {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            transform: scale(1.05);
+            opacity: 0.35;
+            filter: blur(2px) brightness(0.8);
+            pointer-events: none;
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .timer-bar {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ffaa3388;
+            font-weight: 500;
+        }
+        .timer-item {
+            background: #1a1c2c;
+            padding: 5px 15px;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #ffdd99;
+        }
+        .timer-item i { margin-right: 8px; color: #ffaa33; }
+        .session-warning { background: #a1222288; padding: 5px 12px; border-radius: 30px; font-size: 0.8rem; color: #ffb3b3; }
+        .header {
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            border: 1px solid #ffaa33aa;
+        }
+        .logo h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #FFD966, #FF8800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .contact a {
+            background: #1f1c2c;
+            padding: 6px 20px;
+            border-radius: 40px;
+            border-left: 3px solid gold;
+            color: #FFD966;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        .tabs { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tab-btn {
+            background: #1f1c2c;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: 0.2s;
+        }
+        .tab-btn.active { background: linear-gradient(95deg, #f0a500, #ff5500); box-shadow: 0 0 10px #ffaa33; }
+        .panel { display: none; }
+        .panel.active-panel { display: block; }
+        .card {
+            background: rgba(12, 15, 30, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            border: 1px solid #ffaa3355;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .card h2 { color: #ffcc77; border-left: 5px solid #ffaa33; padding-left: 15px; margin-bottom: 20px; }
+        input, select, button { padding: 12px 18px; border-radius: 60px; border: none; outline: none; font-size: 1rem; }
+        input, select { background: rgba(26, 28, 44, 0.8); color: white; border: 1px solid #ffaa3366; width: 100%; margin-bottom: 15px; }
+        button { background: linear-gradient(95deg, #f0a500, #ff5500); color: white; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { transform: scale(0.98); opacity: 0.9; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+        .mod-item, .key-item {
+            background: #0b0e1ad9;
+            border-radius: 24px;
+            padding: 12px 18px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .badge { background: #ffaa33; color: black; padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; font-weight: bold; }
+        .badge-blocked { background: #b71c1c; color: white; }
+        .key-code { font-family: monospace; font-size: 0.9rem; background: black; padding: 6px 12px; border-radius: 30px; letter-spacing: 1px; }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000000cc;
+            backdrop-filter: blur(10px);
+            color: #ffdd99;
+            padding: 10px 24px;
+            border-radius: 60px;
+            z-index: 999;
+            font-weight: bold;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(16px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .login-box {
+            background: rgba(17, 19, 31, 0.65);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 48px;
+            width: 380px;
+            text-align: center;
+            border: 1px solid rgba(255, 170, 51, 0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .login-box input { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border: 1px solid #ffaa33aa; }
+        .error-msg { color: #ff8888; margin-top: 15px; font-size: 0.9rem; }
+        .inline-code { font-family: monospace; background: #00000077; padding: 4px 8px; border-radius: 20px; }
+        .switch-label { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; color: #ffdd99; }
+        .switch-label input { width: auto; margin: 0; }
+        .security-note { background: #1a1c2c88; border-radius: 30px; padding: 12px; font-size: 0.8rem; text-align: center; margin-top: 20px; }
+        .security-note a { color: #ffaa33; }
+        .screen-protect { position: fixed; bottom: 15px; right: 15px; background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 20px; font-size: 10px; color: #ffaa66; z-index: 999; pointer-events: none; font-family: monospace; }
+        button.small-btn { padding: 6px 12px; font-size: 0.75rem; margin-left: 5px; background: #2c6e2c; }
+        button.warning-btn { background: #a12222; }
+    </style>
+</head>
+<body>
+<div class="bg-video">
+    <iframe src="https://www.youtube.com/embed/pwmaRKtCa20?autoplay=1&mute=1&loop=1&playlist=pwmaRKtCa20&controls=0&showinfo=0&modestbranding=1&rel=0&disablekb=1&fs=0&iv_load_policy=3" 
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+<div class="container">
+    <div class="timer-bar">
+        <div class="timer-item"><i class="fas fa-clock"></i> <span id="uptimeTimer">00:00:00</span> (running)</div>
+        <div class="timer-item"><i class="fas fa-hourglass-half"></i> Session: <span id="sessionCountdown">--:--</span></div>
+        <div class="session-warning" id="sessionWarning">⏱️ Auto-logout after 5 min</div>
+    </div>
+    <div class="header">
+        <div class="logo"><h1><i class="fas fa-mobile-alt"></i> PUSHKAR VIP MODS</h1><p>🔑 Doraemon Key Panel | +Device Manager</p></div>
+        <div class="contact"><a href="https://t.me/Pro_lege9d" target="_blank"><i class="fab fa-telegram"></i> @PRO_LEGE9D</a></div>
+    </div>
+    <div id="mainApp"></div>
+    <div class="security-note"><i class="fas fa-cloud-upload-alt"></i> <strong>DDoS Protection:</strong> Cloudflare ready · Screen share blocked · Device slots can be added anytime (cost 1 key/slot)</div>
+</div>
+<div class="screen-protect"><i class="fas fa-ban"></i> Screen share & recording prohibited</div>
+
+<script>
+    // ======================== GLOBAL STATE ========================
+    let mods = [];
+    let keys = [];
+    let nextModId = 1;
+    let nextKeyId = 1;
+    let currentUser = null;
+    let isOwnerMode = false;
+    let loginAttempts = {};
+    let sessionInterval = null, sessionTimeout = null;
+    let startTime = Date.now();
+    let uptimeInterval = null;
+
+    const OWNER_USERNAME = "pushkar2006";
+    const OWNER_PASSWORD = "8788296319";
+
+    let allowCustomDays = true;
+    let allowedPresets = [1, 7, 30, 60];
+    let deviceLimitOptions = [1, 2, 3, 5, 10];
+    let allowCustomDevices = true;
+
+    // ---------- ANTI SCREEN SHARE ----------
+    function preventScreenShare() {
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'PrintScreen') { e.preventDefault(); toast("📸 Screenshot blocked."); return false; }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault(); toast("🔒 Dev tools blocked."); return false;
+            }
+        });
+        document.body.style.userSelect = 'none';
+        document.addEventListener('copy', (e) => { e.preventDefault(); toast("Copy disabled"); });
+    }
+
+    // ---------- TIMERS ----------
+    function startUptimeTimer() {
+        if (uptimeInterval) clearInterval(uptimeInterval);
+        uptimeInterval = setInterval(() => {
+            let elapsed = Math.floor((Date.now() - startTime) / 1000);
+            let hrs = Math.floor(elapsed / 3600), mins = Math.floor((elapsed % 3600) / 60), secs = elapsed % 60;
+            document.getElementById("uptimeTimer").innerText = `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+        }, 1000);
+    }
+
+    function startSessionTimer() {
+        if (sessionInterval) clearInterval(sessionInterval);
+        if (sessionTimeout) clearTimeout(sessionTimeout);
+        let sessionEndTime = Date.now() + (5 * 60 * 1000);
+        function update() {
+            let remaining = sessionEndTime - Date.now();
+            if (remaining <= 0) {
+                clearInterval(sessionInterval); clearTimeout(sessionTimeout);
+                toast("⏰ Session expired. Logging out...");
+                currentUser = null; isOwnerMode = false;
+                renderLogin();
+                return;
+            }
+            let mins = Math.floor(remaining / 60000), secs = Math.floor((remaining % 60000) / 1000);
+            document.getElementById("sessionCountdown").innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            let warnDiv = document.getElementById("sessionWarning");
+            if (mins === 0 && secs <= 30) warnDiv.style.background = "#dd3333aa";
+            else warnDiv.style.background = "#a1222288";
+        }
+        update();
+        sessionInterval = setInterval(update, 1000);
+        sessionTimeout = setTimeout(() => { if (currentUser) { currentUser = null; renderLogin(); } }, 5 * 60 * 1000);
+    }
+    function clearSessionTimer() { if (sessionInterval) clearInterval(sessionInterval); if (sessionTimeout) clearTimeout(sessionTimeout); document.getElementById("sessionCountdown").innerText = "--:--"; }
+
+    // ---------- STORAGE ----------
+    function saveAll() {
+        localStorage.setItem("pushkar_mods_v7", JSON.stringify(mods));
+        localStorage.setItem("pushkar_keys_v7", JSON.stringify(keys));
+        localStorage.setItem("pushkar_settings_v7", JSON.stringify({ allowCustomDays, allowedPresets, deviceLimitOptions, allowCustomDevices }));
+    }
+    function loadData() {
+        let sm = localStorage.getItem("pushkar_mods_v7");
+        let sk = localStorage.getItem("pushkar_keys_v7");
+        let ss = localStorage.getItem("pushkar_settings_v7");
+        if(sm) mods = JSON.parse(sm);
+        if(sk) keys = JSON.parse(sk);
+        if(ss) { let s = JSON.parse(ss); allowCustomDays = s.allowCustomDays ?? true; allowedPresets = s.allowedPresets || [1,7,30,60]; deviceLimitOptions = s.deviceLimitOptions || [1,2,3,5,10]; allowCustomDevices = s.allowCustomDevices ?? true; }
+        if(mods.length) nextModId = Math.max(...mods.map(m=>m.id),0)+1;
+        if(keys.length) nextKeyId = Math.max(...keys.map(k=>k.id),0)+1;
+    }
+    function toast(msg) { let t=document.createElement('div'); t.className="toast"; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+    function generateKeyString() { let chars="ABCDEFGHJKLMNPQRSTUVWXYZ0123456789", seg=()=>Array(4).fill(0).map(()=>chars[Math.floor(Math.random()*chars.length)]).join(''); return `${seg()}-${seg()}-${seg()}`; }
+    function getDaysLeft(expiryDate) { let diff=Math.ceil((new Date(expiryDate)-new Date())/(1000*3600*24)); return diff>0?diff:0; }
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m=>(m==='&'?'&amp;':m==='<'?'&lt;':'&gt;')); }
+
+    function buildDeviceSelectorHTML(selectedVal=1) {
+        let html=`<select id="deviceLimitSelect" style="width:100%;">`+deviceLimitOptions.map(o=>`<option value="${o}" ${selectedVal==o?'selected':''}>${o} Device${o!==1?'s':''}</option>`).join('');
+        if(allowCustomDevices) html+=`<option value="custom" ${selectedVal==='custom'?'selected':''}>Custom (enter number)</option>`;
+        html+=`</select>`;
+        if(allowCustomDevices) html+=`<div id="customDevicesDiv" style="display:none; margin-top:10px;"><input type="number" id="customDevicesInput" placeholder="Devices (1-100)" min="1" max="100"></div>`;
+        return html;
+    }
+    function attachDeviceSelectorEvents() {
+        let select=document.getElementById("deviceLimitSelect");
+        if(select && allowCustomDevices) {
+            let customDiv=document.getElementById("customDevicesDiv");
+            let update=()=>{ if(customDiv) customDiv.style.display=select.value==="custom"?"block":"none"; };
+            select.addEventListener("change",update); update();
+        }
+    }
+    function getSelectedDevices() {
+        let select=document.getElementById("deviceLimitSelect");
+        if(!select) return 1;
+        if(select.value==="custom") { let val=parseInt(document.getElementById("customDevicesInput")?.value); return (isNaN(val)||val<1)?1:Math.min(val,100); }
+        return parseInt(select.value);
+    }
+
+    // ---------- ADD DEVICE SLOT TO EXISTING KEY ----------
+    function addDeviceToKey(keyId, userId, userBalanceRef, isOwnerFlag) {
+        let keyIdx = keys.findIndex(k => k.id === keyId);
+        if(keyIdx === -1) return toast("Key not found");
+        let key = keys[keyIdx];
+        if(key.blocked) return toast("Key is blocked, cannot add devices");
+        let expiry = new Date(key.createdAt);
+        expiry.setDate(expiry.getDate() + key.durationDays);
+        if(new Date() > expiry) return toast("Key expired, cannot add devices");
+        let cost = 1;  // cost per extra device slot
+        if(!isOwnerFlag) {
+            let modIdx = mods.findIndex(m => m.id === userId);
+            if(modIdx === -1) return toast("Mod not found");
+            if(mods[modIdx].balance < cost) return toast(`Insufficient balance! Need ${cost} key to add 1 device.`);
+            mods[modIdx].balance -= cost;
+            if(currentUser && currentUser.id === userId) currentUser.balance = mods[modIdx].balance;
+        }
+        // increase maxDevices
+        keys[keyIdx].maxDevices += 1;
+        saveAll();
+        toast(`✅ Added 1 device slot to key ${key.keyString}. New limit: ${keys[keyIdx].maxDevices} devices.`);
+        // re-render current panel
+        if(isOwnerFlag) { refreshAllKeysOwner(); updateDashboardOwner(); }
+        else { if(document.getElementById("mykeysPanel")?.classList.contains("active-panel")) refreshMyKeysMod(); if(document.getElementById("dashboardPanel")?.classList.contains("active-panel")) updateModDashboard(); if(document.getElementById("modBalanceSpan")) document.getElementById("modBalanceSpan").innerText = currentUser.balance; }
+    }
+
+    // ---------- LOGIN ----------
+    function checkRateLimit(identifier) {
+        let now=Date.now();
+        if(!loginAttempts[identifier]) loginAttempts[identifier]=[];
+        loginAttempts[identifier]=loginAttempts[identifier].filter(t=>now-t<60000);
+        if(loginAttempts[identifier].length>=5) { toast("Too many attempts, wait 1min"); return false; }
+        loginAttempts[identifier].push(now); return true;
+    }
+    function renderLogin() {
+        clearSessionTimer();
+        document.getElementById("mainApp").innerHTML = `
+            <div class="login-overlay" style="position:relative; background:transparent;">
+                <div class="login-box">
+                    <i class="fas fa-shield-virus" style="font-size:48px; color:#ffaa33;"></i>
+                    <h2>🔐 Secure Entry · 5min session</h2>
+                    <input type="text" id="loginName" placeholder="Username" autocomplete="off">
+                    <input type="password" id="loginPass" placeholder="Password">
+                    <button id="doLoginBtn">Enter Panel</button>
+                    <div id="loginError" class="error-msg"></div>
+                    <p>👑 Owner: pushkar2006 / 8788296319<br>🤝 Mods: credentials from owner</p>
+                </div>
+            </div>`;
+        document.getElementById("doLoginBtn").onclick = () => {
+            let name=document.getElementById("loginName").value.trim(), pass=document.getElementById("loginPass").value.trim();
+            if(!checkRateLimit(name)) return;
+            if(name===OWNER_USERNAME && pass===OWNER_PASSWORD) {
+                isOwnerMode=true; currentUser={id:-1,name:"OWNER",balance:999999,isOwner:true};
+                startSessionTimer(); renderOwnerPanel();
+            } else {
+                let mod=mods.find(m=>m.name===name && m.password===pass);
+                if(mod) { isOwnerMode=false; currentUser={id:mod.id,name:mod.name,balance:mod.balance}; startSessionTimer(); renderModPanel(); }
+                else document.getElementById("loginError").innerHTML=`❌ Invalid. Contact <a href="https://t.me/Pro_lege9d" target="_blank" style="color:#ffaa33;">@PRO_LEGE9D</a>`;
+            }
+        };
+    }
+
+    // ======================== OWNER PANEL ========================
+    function renderOwnerPanel() {
+        const app=document.getElementById("mainApp");
+        app.innerHTML = `
+            <div style="display:flex; justify-content:flex-end;"><button id="logoutBtn" style="background:#333;"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
+            <div class="grid-2"><div class="card"><h2>Manage Mods</h2><input id="newModName" placeholder="Mod Name"><input id="newModPass" placeholder="Password"><input id="newModBal" placeholder="Initial Keys" value="0"><button id="addModBtn">+ Add Mod</button><div id="modList"></div></div>
+            <div class="card"><h2>Global Settings</h2><div class="switch-label"><input type="checkbox" id="allowCustomDaysToggle" ${allowCustomDays?'checked':''}><label>Custom duration</label></div><label>Preset days:</label><input id="presetsInput" value="${allowedPresets.join(',')}"><div class="switch-label"><input type="checkbox" id="allowCustomDevicesToggle" ${allowCustomDevices?'checked':''}><label>Custom device limits</label></div><label>Device presets:</label><input id="deviceLimitsInput" value="${deviceLimitOptions.join(',')}"><button id="saveSettingsBtn">Save</button></div></div>
+            <div class="card"><h2>Owner · Free Key Generation</h2><div class="grid-2"><div><input id="ownerKeyName" placeholder="Key Name"><div id="ownerDurationOptions"></div><div id="ownerDeviceOptions"></div><button id="ownerGenKeyBtn">Generate Unlimited Key</button></div><div><h3>All Keys <button id="refreshAllKeysBtn" style="background:#333;">⟳</button></h3><div id="allKeysList" style="max-height:400px; overflow-y:auto;"></div></div></div></div>
+            <div class="card"><h2>Global Dashboard</h2><div id="dashboardStats"></div><div id="expiryList"></div></div>`;
+        function buildOwnerDuration(){
+            let cont=document.getElementById("ownerDurationOptions");
+            let html=`<select id="ownerDurationSelect">`+allowedPresets.map(d=>`<option value="${d}">${d} days</option>`).join('')+(allowCustomDays?`<option value="custom">Custom</option>`:'')+`</select>`;
+            if(allowCustomDays) html+=`<div id="ownerCustomDaysDiv" style="display:none;"><input type="number" id="ownerCustomDaysInput" placeholder="Days (1-365)"></div>`;
+            cont.innerHTML=html;
+            let sel=document.getElementById("ownerDurationSelect");
+            if(sel && allowCustomDays) sel.onchange=()=>{document.getElementById("ownerCustomDaysDiv").style.display=sel.value==="custom"?"block":"none";};
+        }
+        function buildOwnerDevices(){ document.getElementById("ownerDeviceOptions").innerHTML=buildDeviceSelectorHTML(1); attachDeviceSelectorEvents(); }
+        buildOwnerDuration(); buildOwnerDevices();
+        document.getElementById("ownerGenKeyBtn").onclick=()=>{
+            let name=document.getElementById("ownerKeyName").value.trim();
+            if(!name) return toast("Key name required");
+            let dur=0, durSel=document.getElementById("ownerDurationSelect");
+            if(durSel.value==="custom"){ let c=parseInt(document.getElementById("ownerCustomDaysInput")?.value); if(isNaN(c)||c<1||c>365) return toast("Days 1-365"); dur=c; }
+            else dur=parseInt(durSel.value);
+            let maxDev=getSelectedDevices();
+            let newKey={id:nextKeyId++, keyString:generateKeyString(), createdByModId:-1, createdByModName:"👑 OWNER", createdAt:new Date().toISOString(), durationDays:dur, keyName:name, usedCount:0, maxDevices:maxDev, blocked:false, redeemedBy:[], redeemedAt:[]};
+            keys.push(newKey); saveAll(); toast(`Key: ${newKey.keyString} | ${dur}d | ${maxDev} devices`);
+            document.getElementById("ownerKeyName").value=""; refreshAllKeysOwner(); updateDashboardOwner();
+            buildOwnerDuration(); buildOwnerDevices();
+        };
+        window.refreshAllKeysOwner = function(){
+            let cont=document.getElementById("allKeysList");
+            if(!cont) return;
+            if(keys.length===0){ cont.innerHTML="<p>No keys</p>"; return; }
+            let html="";
+            [...keys].reverse().forEach(key=>{
+                let exp=new Date(key.createdAt); exp.setDate(exp.getDate()+key.durationDays);
+                let daysLeft=key.blocked?0:getDaysLeft(exp), used=key.usedCount||0, rem=key.maxDevices-used;
+                let status=key.blocked?"BLOCKED":(rem<=0?"FULLY USED":(daysLeft<=0?"EXPIRED":`${rem}/${key.maxDevices} slots`));
+                let addDeviceBtn = (!key.blocked && daysLeft>0) ? `<button class="addDeviceOwnerBtn" data-id="${key.id}" style="background:#2c6e2c; margin-left:5px;">➕ +1 Device</button>` : '';
+                html+=`<div class="key-item"><div><span class="key-code">${key.keyString}</span><br><small>${escapeHtml(key.keyName)} | ${key.durationDays}d | Max:${key.maxDevices} devs<br>Exp:${exp.toLocaleDateString()}</small></div><div><span class="badge ${key.blocked?'badge-blocked':''}">${status}</span>${addDeviceBtn}${!key.blocked && rem>0 && daysLeft>0?`<button class="blockKeyBtn" data-id="${key.id}" style="background:#a12222;">🚫 Block</button>`:''}</div></div>`;
+            });
+            cont.innerHTML=html;
+            document.querySelectorAll(".addDeviceOwnerBtn").forEach(btn=>btn.addEventListener("click",()=>{ let kid=parseInt(btn.dataset.id); addDeviceToKey(kid, -1, 0, true); }));
+            document.querySelectorAll(".blockKeyBtn").forEach(btn=>btn.addEventListener("click",()=>{ let kid=parseInt(btn.dataset.id); if(confirm("Block key?")){ let idx=keys.findIndex(k=>k.id===kid); if(idx!==-1){ keys[idx].blocked=true; saveAll(); refreshAllKeysOwner(); updateDashboardOwner(); toast("Blocked"); } } }));
+        };
+        window.updateDashboardOwner = function(){
+            let total=keys.length, active=keys.filter(k=>!k.blocked && k.usedCount<k.maxDevices && getDaysLeft(new Date(new Date(k.createdAt).setDate(new Date(k.createdAt).getDate()+k.durationDays))>0)).length;
+            let fullUsed=keys.filter(k=>k.usedCount>=k.maxDevices).length, blocked=keys.filter(k=>k.blocked).length, expired=keys.filter(k=>!k.blocked && k.usedCount<k.maxDevices && getDaysLeft(new Date(new Date(k.createdAt).setDate(new Date(k.createdAt).getDate()+k.durationDays))<=0)).length;
+            document.getElementById("dashboardStats").innerHTML=`<p>Total:${total} | Active:${active} | Fully Used:${fullUsed} | Blocked:${blocked} | Expired:${expired}</p>`;
+            document.getElementById("expiryList").innerHTML=keys.map(k=>{ let exp=new Date(k.createdAt); exp.setDate(exp.getDate()+k.durationDays); let days=getDaysLeft(exp); let state=k.blocked?"Blocked":(k.usedCount>=k.maxDevices?"Full":(days>0?`${days}d left`:"Expired")); return `<div class="key-item"><div><span class="key-code">${k.keyString}</span><br><small>${escapeHtml(k.keyName)} | Exp:${exp.toLocaleDateString()} | ${state} | Max devices:${k.maxDevices}</small></div></div>`; }).join("");
+        };
+        function refreshModList(){
+            let cont=document.getElementById("modList");
+            if(!cont) return;
+            if(mods.length===0){ cont.innerHTML="<p>No mods</p>"; return; }
+            let html="";
+            mods.forEach(mod=>{ html+=`<div class="mod-item"><div><strong>${escapeHtml(mod.name)}</strong><br>🔑 Pass: ${escapeHtml(mod.password)}<br>💰 Balance: ${mod.balance}</div><div><button class="copyCredsBtn" data-name="${escapeHtml(mod.name)}" data-pass="${escapeHtml(mod.password)}" style="background:#2c6e2c;">Copy</button><button class="editPassBtn" data-id="${mod.id}" style="background:#f0a500;">Edit Pass</button><button class="addBalanceBtn" data-id="${mod.id}" style="background:#f0a500;">+Keys</button><button class="removeModBtn" data-id="${mod.id}" style="background:#a12222;">Delete</button></div></div>`; });
+            cont.innerHTML=html;
+            document.querySelectorAll(".copyCredsBtn").forEach(btn=>btn.onclick=()=>{ navigator.clipboard.writeText(`Username: ${btn.dataset.name}\nPassword: ${btn.dataset.pass}`); toast("Copied"); });
+            document.querySelectorAll(".removeModBtn").forEach(btn=>btn.onclick=()=>{ let id=parseInt(btn.dataset.id); if(confirm("Delete mod and all keys?")){ mods=mods.filter(m=>m.id!==id); keys=keys.filter(k=>k.createdByModId!==id); saveAll(); renderOwnerPanel(); } });
+            document.querySelectorAll(".addBalanceBtn").forEach(btn=>btn.onclick=()=>{ let id=parseInt(btn.dataset.id), amt=prompt("Add keys:"); if(amt && !isNaN(parseInt(amt)) && parseInt(amt)>0){ let idx=mods.findIndex(m=>m.id===id); if(idx!==-1){ mods[idx].balance+=parseInt(amt); saveAll(); renderOwnerPanel(); } } });
+            document.querySelectorAll(".editPassBtn").forEach(btn=>btn.onclick=()=>{ let id=parseInt(btn.dataset.id), np=prompt("New password:"); if(np && np.trim()){ let idx=mods.findIndex(m=>m.id===id); if(idx!==-1){ mods[idx].password=np.trim(); saveAll(); renderOwnerPanel(); } } });
+        }
+        document.getElementById("addModBtn").onclick=()=>{ let name=document.getElementById("newModName").value.trim(), pass=document.getElementById("newModPass").value.trim(), bal=parseInt(document.getElementById("newModBal").value)||0; if(!name||!pass) return toast("Name & pass"); if(mods.find(m=>m.name===name)) return toast("Exists"); mods.push({id:nextModId++, name, password:pass, balance:bal}); saveAll(); renderOwnerPanel(); };
+        document.getElementById("saveSettingsBtn").onclick=()=>{ allowCustomDays=document.getElementById("allowCustomDaysToggle").checked; let presets=document.getElementById("presetsInput").value.split(',').map(p=>parseInt(p.trim())).filter(p=>!isNaN(p)&&p>0); allowedPresets=presets.length?[...new Set(presets)].sort((a,b)=>a-b):[1,7,30]; allowCustomDevices=document.getElementById("allowCustomDevicesToggle").checked; let devs=document.getElementById("deviceLimitsInput").value.split(',').map(d=>parseInt(d.trim())).filter(d=>!isNaN(d)&&d>0); deviceLimitOptions=devs.length?[...new Set(devs)].sort((a,b)=>a-b):[1,2,3,5,10]; saveAll(); renderOwnerPanel(); };
+        document.getElementById("logoutBtn").onclick=()=>{ clearSessionTimer(); currentUser=null; isOwnerMode=false; renderLogin(); };
+        document.getElementById("refreshAllKeysBtn").onclick=()=>{ refreshAllKeysOwner(); updateDashboardOwner(); };
+        refreshModList(); refreshAllKeysOwner(); updateDashboardOwner();
+    }
+
+    // ======================== MOD PANEL ========================
+    function renderModPanel() {
+        let modData=mods.find(m=>m.id===currentUser.id);
+        if(!modData){ toast("Mod error"); renderLogin(); return; }
+        currentUser.balance=modData.balance;
+        const app=document.getElementById("mainApp");
+        app.innerHTML = `<div style="display:flex; justify-content:space-between;"><h2>Mod: ${escapeHtml(currentUser.name)} | 💎 <span id="modBalanceSpan">${currentUser.balance}</span> keys</h2><button id="logoutModBtn" style="background:#333;">Logout</button></div>
+        <div class="tabs"><button class="tab-btn active" data-tab="generate">🔑 Generate</button><button class="tab-btn" data-tab="mykeys">📦 My Keys</button><button class="tab-btn" data-tab="dashboard">📊 Dashboard</button><button class="tab-btn" data-tab="redeem">🎁 Redeem</button></div>
+        <div id="generatePanel" class="panel active-panel"><div class="card"><h2>Generate Key (cost = device count)</h2><p>Balance: ${currentUser.balance}</p><input id="keyName" placeholder="Key name"><div id="modDurationOptions"></div><div id="modDeviceOptions"></div><button id="genKeyBtn">Generate</button></div></div>
+        <div id="mykeysPanel" class="panel"><div class="card"><h2>My Keys + Add Device Slots</h2><div id="modKeysList"></div></div></div>
+        <div id="dashboardPanel" class="panel"><div class="card"><h2>My Stats</h2><div id="modDashboard"></div></div></div>
+        <div id="redeemPanel" class="panel"><div class="card"><h2>Redeem Key</h2><input id="redeemKeyInput" placeholder="Key code"><button id="redeemKeyBtn">Redeem</button><div id="redeemResult"></div></div></div>`;
+        
+        function buildModDuration(){
+            let cont=document.getElementById("modDurationOptions");
+            let html=`<select id="modDurationSelect">`+allowedPresets.map(d=>`<option value="${d}">${d} days</option>`).join('')+(allowCustomDays?`<option value="custom">Custom</option>`:'')+`</select>`;
+            if(allowCustomDays) html+=`<div id="modCustomDaysDiv" style="display:none;"><input id="modCustomDaysInput" placeholder="Days (1-365)"></div>`;
+            cont.innerHTML=html;
+            let sel=document.getElementById("modDurationSelect");
+            if(sel && allowCustomDays) sel.onchange=()=>{document.getElementById("modCustomDaysDiv").style.display=sel.value==="custom"?"block":"none";};
+        }
+        function buildModDevices(){ document.getElementById("modDeviceOptions").innerHTML=buildDeviceSelectorHTML(1); attachDeviceSelectorEvents(); }
+        buildModDuration(); buildModDevices();
+        document.getElementById("genKeyBtn").onclick=()=>{
+            let idx=mods.findIndex(m=>m.id===currentUser.id);
+            if(idx===-1) return toast("error");
+            let keyName=document.getElementById("keyName").value.trim();
+            if(!keyName) return toast("Key name");
+            let dur=0, durSel=document.getElementById("modDurationSelect");
+            if(durSel.value==="custom"){ let c=parseInt(document.getElementById("modCustomDaysInput")?.value); if(isNaN(c)||c<1||c>365) return toast("Invalid days"); dur=c; }
+            else dur=parseInt(durSel.value);
+            let maxDev=getSelectedDevices(), cost=maxDev;
+            if(mods[idx].balance<cost) return toast(`Need ${cost} keys, balance ${mods[idx].balance}`);
+            mods[idx].balance-=cost; currentUser.balance=mods[idx].balance; document.getElementById("modBalanceSpan").innerText=currentUser.balance;
+            let newKey={id:nextKeyId++, keyString:generateKeyString(), createdByModId:currentUser.id, createdByModName:currentUser.name, createdAt:new Date().toISOString(), durationDays:dur, keyName, usedCount:0, maxDevices:maxDev, blocked:false, redeemedBy:[], redeemedAt:[]};
+            keys.push(newKey); saveAll(); toast(`Key: ${newKey.keyString} | ${dur}d | ${maxDev} devices (cost ${cost})`);
+            document.getElementById("keyName").value=""; buildModDuration(); buildModDevices();
+        };
+        window.refreshMyKeysMod = function(){
+            let cont=document.getElementById("modKeysList");
+            let myKeys=keys.filter(k=>k.createdByModId===currentUser.id);
+            if(!myKeys.length){ cont.innerHTML="<p>No keys</p>"; return; }
+            let html="";
+            myKeys.slice().reverse().forEach(key=>{
+                let exp=new Date(key.createdAt); exp.setDate(exp.getDate()+key.durationDays);
+                let daysLeft=key.blocked?0:getDaysLeft(exp), used=key.usedCount||0, rem=key.maxDevices-used;
+                let status=key.blocked?"BLOCKED":(rem<=0?"FULLY USED":(daysLeft<=0?"EXPIRED":`${rem}/${key.maxDevices} slots`));
+                let addDeviceBtn = (!key.blocked && daysLeft>0) ? `<button class="addDeviceModBtn" data-id="${key.id}" style="background:#2c6e2c; margin-left:5px;">➕ +1 Device (1 key)</button>` : '';
+                html+=`<div class="key-item"><div><span class="key-code">${key.keyString}</span><br><small>${escapeHtml(key.keyName)} | ${key.durationDays}d | Max:${key.maxDevices} devs<br>Exp:${exp.toLocaleDateString()}</small></div><div><span class="badge ${key.blocked?'badge-blocked':''}">${status}</span>${addDeviceBtn}${!key.blocked && rem>0 && daysLeft>0?`<button class="modBlockKeyBtn" data-id="${key.id}" style="background:#a12222;">🚫 Block</button>`:''}<button class="copyKeyBtn" data-key="${key.keyString}" style="background:#2c5f2d;">📋 Copy</button></div></div>`;
+            });
+            cont.innerHTML=html;
+            document.querySelectorAll(".addDeviceModBtn").forEach(btn=>btn.addEventListener("click",()=>{ let kid=parseInt(btn.dataset.id); addDeviceToKey(kid, currentUser.id, currentUser.balance, false); }));
+            document.querySelectorAll(".modBlockKeyBtn").forEach(btn=>btn.addEventListener("click",()=>{ let kid=parseInt(btn.dataset.id); if(confirm("Block key?")){ let kIdx=keys.findIndex(k=>k.id===kid); if(kIdx!==-1){ keys[kIdx].blocked=true; saveAll(); refreshMyKeysMod(); updateModDashboard(); toast("Blocked"); } } }));
+            document.querySelectorAll(".copyKeyBtn").forEach(btn=>btn.addEventListener("click",()=>{ navigator.clipboard.writeText(btn.dataset.key); toast("Copied"); }));
+        };
+        window.updateModDashboard = function(){
+            let myKeys=keys.filter(k=>k.createdByModId===currentUser.id);
+            let active=myKeys.filter(k=>!k.blocked && k.usedCount<k.maxDevices && getDaysLeft(new Date(new Date(k.createdAt).setDate(new Date(k.createdAt).getDate()+k.durationDays))>0)).length;
+            let full=myKeys.filter(k=>k.usedCount>=k.maxDevices).length, blocked=myKeys.filter(k=>k.blocked).length, expired=myKeys.filter(k=>!k.blocked && k.usedCount<k.maxDevices && getDaysLeft(new Date(new Date(k.createdAt).setDate(new Date(k.createdAt).getDate()+k.durationDays))<=0)).length;
+            let details=myKeys.map(k=>{ let exp=new Date(k.createdAt); exp.setDate(exp.getDate()+k.durationDays); let days=getDaysLeft(exp); let state=k.blocked?"Blocked":(k.usedCount>=k.maxDevices?"Full":(days>0?`${days}d left`:"Expired")); return `<div class="key-item"><div><span class="key-code">${k.keyString}</span><br><small>${escapeHtml(k.keyName)} | Exp:${exp.toLocaleDateString()} | Max devs:${k.maxDevices} | ${state}</small></div></div>`; }).join('');
+            document.getElementById("modDashboard").innerHTML=`<p>Total:${myKeys.length} | Active:${active} | Fully Used:${full} | Blocked:${blocked} | Expired:${expired}</p><div>${details||"<p>No keys</p>"}</div>`;
+        };
+        document.getElementById("redeemKeyBtn").onclick=()=>{
+            let inputKey=document.getElementById("redeemKeyInput").value.trim().toUpperCase(), resDiv=document.getElementById("redeemResult");
+            let kIdx=keys.findIndex(k=>k.keyString===inputKey);
+            if(kIdx===-1){ resDiv.innerHTML="❌ Invalid key."; return; }
+            let key=keys[kIdx];
+            if(key.blocked){ resDiv.innerHTML="Blocked key."; return; }
+            if(key.usedCount>=key.maxDevices){ resDiv.innerHTML=`⚠️ No slots left (${key.maxDevices}/${key.maxDevices})`; return; }
+            let exp=new Date(key.createdAt); exp.setDate(exp.getDate()+key.durationDays);
+            if(new Date()>exp){ resDiv.innerHTML=`Expired on ${exp.toLocaleDateString()}`; return; }
+            keys[kIdx].usedCount=(key.usedCount||0)+1;
+            if(!keys[kIdx].redeemedBy) keys[kIdx].redeemedBy=[];
+            keys[kIdx].redeemedBy.push("Customer");
+            saveAll();
+            let remaining=key.maxDevices-keys[kIdx].usedCount;
+            resDiv.innerHTML=`✅ Redeemed! Remaining devices: ${remaining}. Enjoy ${escapeHtml(key.keyName)}.`;
+            document.getElementById("redeemKeyInput").value="";
+            if(document.getElementById("mykeysPanel")?.classList.contains("active-panel")) refreshMyKeysMod();
+            if(document.getElementById("dashboardPanel")?.classList.contains("active-panel")) updateModDashboard();
+        };
+        document.querySelectorAll(".tab-btn").forEach(btn=>btn.addEventListener("click",()=>{
+            document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active");
+            document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active-panel"));
+            let tab=btn.dataset.tab;
+            if(tab==="generate") document.getElementById("generatePanel").classList.add("active-panel");
+            if(tab==="mykeys"){ document.getElementById("mykeysPanel").classList.add("active-panel"); refreshMyKeysMod(); }
+            if(tab==="dashboard"){ document.getElementById("dashboardPanel").classList.add("active-panel"); updateModDashboard(); }
+            if(tab==="redeem") document.getElementById("redeemPanel").classList.add("active-panel");
+        }));
+        document.getElementById("logoutModBtn").onclick=()=>{ clearSessionTimer(); currentUser=null; renderLogin(); };
+        refreshMyKeysMod(); updateModDashboard();
+    }
+
+    loadData(); startUptimeTimer(); preventScreenShare(); renderLogin();
+</script>
+</body>
+</html>
