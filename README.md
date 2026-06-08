@@ -4,15 +4,32 @@ Static website publishing is configured via GitHub Pages.
 
 ## Shareable Link
 
-After you push changes to `main`, GitHub Pages can publish the site at:
+Your site is available right now via HTML preview:
+
+`https://htmlpreview.github.io/?https://github.com/pushkar4888/key-panel/blob/main/index.html`
+
+This URL renders the live `index.html` from your repository and can be shared with customers immediately.
+
+## GitHub Pages Deployment
+
+Official GitHub Pages publishing can use:
 
 `https://pushkar4888.github.io/key-panel/`
 
-Use that URL to share the website with customers once the workflow completes successfully.
+However, this repository still needs Pages enabled in GitHub settings. The current workflow is set to manual dispatch only, because automatic enablement requires a personal GitHub token and repository settings access.
+
+To enable GitHub Pages:
+
+1. Open the repository on GitHub.
+2. Go to `Settings` > `Pages`.
+3. Choose `main` branch and `/ (root)`.
+4. Save and wait a few minutes.
+
+After that, run the workflow manually from the Actions tab or push another change.
 
 ## Deployment
 
-The repository includes a GitHub Actions workflow at `.github/workflows/pages.yml` that publishes the site from the `main` branch.
+The repository includes a GitHub Actions workflow at `.github/workflows/pages.yml` that can publish the site once GitHub Pages is enabled.
 
 ## DDoS Protection
 
