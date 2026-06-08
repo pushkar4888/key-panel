@@ -1,1 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>श्री कृष्ण Complete Panel | Owner Unlimited + Admin Key System</title>
+    <!-- Tailwind + Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255,215,0,0.3);
+            box-shadow: 0 25px 40px rgba(0,0,0,0.2);
+        }
+        .krishna-img {
+            filter: drop-shadow(0 8px 20px rgba(255,215,0,0.4));
+            transition: transform 0.3s ease;
+        }
+        .krishna-img:hover { transform: scale(1.02); }
+        .btn-gold {
+            background: linear-gradient(95deg, #f3b33d, #e68900);
+            transition: 0.2s;
+        }
+        .btn-gold:hover {
+            background: linear-gradient(95deg, #ffc85a, #ff9f1a);
+            transform: translateY(-2px);
+        }
+        .badge-active { background: #22c55e; color: white; padding: 2px 10px; border-radius: 40px; font-size: 0.7rem; }
+        .badge-blocked { background: #ef4444; color: white; padding: 2px 10px; border-radius: 40px; }
+        .badge-expired { background: #6b7280; color: white; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #f3b33d; border-radius: 10px; }
+        .unlimited-badge {
+            background: linear-gradient(135deg, #ffd966, #ffaa33);
+            color: #1e2a3a;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            box-shadow: 0 0 8px rgba(255,215,0,0.6);
+        }
+        .telegram-btn {
+            background: #0088cc;
+            transition: 0.2s;
+        }
+        .telegram-btn:hover {
+            background: #00aaff;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="text-white">
 
+    <!-- LOGIN SECTION -->
+    <div id="loginSection" class="min-h-screen flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md p-8 rounded-2xl text-center">
+            <div class="flex justify-center mb-3">
+                <img class="krishna-img w-28 h-28 rounded-full object-cover border-4 border-yellow-400" 
+                     src="https://cdn.pixabay.com/photo/2020/07/07/11/23/krishna-5379989_640.png" 
+                     alt="Shree Krishna" onerror="this.src='https://placehold.co/200x200?text=🕉️+Krishna'">
+            </div>
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent mb-2">श्री कृष्ण Key Panel</h2>
+            <p class="text-sm text-gray-300 mb-6">Owner (Unlimited) & Admin Portal</p>
+            <div class="space-y-4">
+                <div class="relative">
+                    <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+                    <input type="text" id="loginUsername" placeholder="Username" class="w-full pl-10 pr-3 py-2 bg-white/20 border border-yellow-500/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
+                </div>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" class="w-full pl-10 pr-3 py-2 bg-white/20 border border-yellow-500/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white">
+                </div>
+                <button id="doLoginBtn" class="btn-gold w-full py-2.5 rounded-xl font-bold text-lg shadow-lg">🔑 प्रवेश करें / Login</button>
+                
+                <!-- Contact Owner Button for Login Issues -->
+                <div class="mt-4">
+                    <a href="https://t.me/Pro_lege9d" target="_blank" class="telegram-btn inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-white shadow-md">
+                        <i class="fab fa-telegram-plane text-lg"></i> 
+                        लॉगिन समस्या? Owner से संपर्क करें
+                    </a>
+                    <p class="text-[11px] text-gray-400 mt-2">Telegram: @Pro_lege9d</p>
+                </div>
+            </div>
+            <div class="mt-6 text-xs text-gray-400 border-t border-yellow-500/30 pt-4">
+                <i class="fab fa-telegram"></i> Owner: @PRO_LEGE9D | Demo Admin: admin1 / admin123
+            </div>
+        </div>
+    </div>
+
+    <!-- OWNER DASHBOARD (UNLIMITED BALANCE) -->
+    <div id="ownerPanel" class="hidden min-h-screen p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-between items-center mb-6 bg-black/30 p-4 rounded-2xl backdrop-blur">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-crown text-yellow-400 text-2xl"></i>
+                    <h1 class="text-2xl md:text-3xl font-bold">👑 Owner Control Panel (Unlimited Keys)</h1>
+                </div>
+                <div class="flex gap-3 items-center">
+                    <span class="unlimited-badge"><i class="fas fa-infinity"></i> Unlimited Balance ∞</span>
+                    <button id="ownerLogoutBtn" class="bg-red-600 hover:bg-red-700 px-5 py-2 rounded-xl font-semibold"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+
+            <!-- Owner Key Generation Section (No deduction, unlimited) -->
+            <div class="glass-card p-6 mb-8">
+                <h2 class="text-2xl font-bold border-l-4 border-yellow-500 pl-3 mb-4">👑 Owner Key Generation (Free / Unlimited)</h2>
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm">⏱️ Duration Type</label>
+                            <select id="ownerKeyDurationSelect" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-600">
+                                <option value="1">1 Day</option><option value="2">2 Days</option><option value="3">3 Days</option><option value="7">7 Days</option>
+                                <option value="30">1 Month (30 days)</option><option value="60">2 Months (60 days)</option><option value="90">3 Months (90 days)</option>
+                                <option value="custom">✨ Custom Months</option>
+                            </select>
+                        </div>
+                        <div id="ownerCustomMonthsDiv" class="hidden">
+                            <label>📅 Custom Months (1-6)</label>
+                            <input type="number" id="ownerCustomMonthsInput" min="1" max="6" value="2" class="w-full p-2 rounded-lg bg-gray-800">
+                        </div>
+                        <div>
+                            <label>📱 Max Devices Allowed</label>
+                            <input type="number" id="ownerMaxDevicesInput" value="1" min="1" max="20" class="w-full p-2 rounded-lg bg-gray-800">
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <label>🔑 Key Type:</label>
+                            <div class="flex gap-2 mt-1">
+                                <input type="text" id="ownerCustomKeyInput" placeholder="Custom key or random" class="flex-1 p-2 rounded-lg bg-gray-800">
+                                <button id="ownerGenRandomKeyBtn" class="bg-purple-600 px-3 rounded-lg"><i class="fas fa-dice"></i> Random</button>
+                            </div>
+                        </div>
+                        <div class="bg-green-900/40 p-3 rounded-xl border border-green-500/50">
+                            <p><i class="fas fa-gem"></i> <strong>Owner Benefit: FREE generation</strong> (No balance deduction)</p>
+                            <p class="text-xs text-gray-200">💰 Regular price would be: ₹<span id="ownerPricePreview">0</span> (but Owner pays ₹0)</p>
+                        </div>
+                        <button id="ownerGenerateKeyBtn" class="btn-gold w-full py-2 rounded-xl font-bold text-lg"><i class="fas fa-key"></i> 🚀 GENERATE KEY (Unlimited)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Balance Management (Owner can add/deduct admin balances) -->
+            <div class="glass-card p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 border-b border-yellow-500/50 pb-2"><i class="fas fa-users"></i> Admin Balance Management</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-black/40 p-4 rounded-xl">
+                        <h3 class="text-xl font-bold text-yellow-300">➕ नया एडमिन</h3>
+                        <div class="mt-3 space-y-2">
+                            <input type="text" id="newAdminUser" placeholder="Username" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-600">
+                            <input type="text" id="newAdminPass" placeholder="Password" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-600">
+                            <input type="number" id="newAdminBal" placeholder="Initial Balance (₹)" value="5000" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-600">
+                            <button id="createAdminBtn" class="bg-green-600 w-full py-2 rounded-lg hover:bg-green-700"><i class="fas fa-user-plus"></i> Create Admin</button>
+                        </div>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl overflow-auto">
+                        <h3 class="text-xl font-bold text-yellow-300">📋 Active Admins</h3>
+                        <div id="adminListContainer" class="mt-3 space-y-3 max-h-80 overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Keys Overview (including owner keys) -->
+            <div class="glass-card p-6">
+                <h2 class="text-2xl font-semibold mb-3"><i class="fas fa-key"></i> All Generated Keys (Admins + Owner)</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-yellow-700/50 text-yellow-200"><tr><th>Key</th><th>Owner/Admin</th><th>Duration</th><th>Expiry</th><th>Max Dev</th><th>Status</th><th>Actions</th></thead>
+                        <tbody id="globalKeysTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD (with balance deduction and recharge link) -->
+    <div id="adminPanel" class="hidden min-h-screen p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-between items-center bg-black/30 p-4 rounded-2xl backdrop-blur mb-6">
+                <div><h1 class="text-2xl font-bold"><i class="fas fa-user-shield"></i> Admin Panel: <span id="adminNameSpan"></span></h1>
+                <p class="text-yellow-300"><i class="fas fa-rupee-sign"></i> My Balance: ₹<span id="adminBalanceSpan">0</span></p></div>
+                <button id="adminLogoutBtn" class="bg-red-600 px-5 py-2 rounded-xl">Logout</button>
+            </div>
+            <div class="glass-card p-6 mb-8">
+                <h2 class="text-2xl font-bold border-l-4 border-yellow-500 pl-3 mb-4">✨ नई कुंजी उत्पन्न करें (Paid via Admin Balance)</h2>
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="space-y-3">
+                        <div><label>⏱️ Duration</label><select id="keyDurationSelect" class="w-full p-2 rounded-lg bg-gray-800"><option value="1">1 Day</option><option value="2">2 Days</option><option value="3">3 Days</option><option value="7">7 Days</option><option value="30">1 Month</option><option value="60">2 Months</option><option value="90">3 Months</option><option value="custom">Custom Months</option></select></div>
+                        <div id="customMonthsDiv" class="hidden"><label>📅 Custom Months</label><input type="number" id="customMonthsInput" min="1" max="6" value="2" class="w-full p-2 rounded-lg bg-gray-800"></div>
+                        <div><label>📱 Max Devices</label><input type="number" id="maxDevicesInput" value="1" min="1" max="20" class="w-full p-2 rounded-lg bg-gray-800"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div><label>🔑 Key:</label><div class="flex gap-2"><input type="text" id="customKeyInput" class="flex-1 p-2 rounded-lg bg-gray-800"><button id="genRandomKeyBtn" class="bg-purple-600 px-3 rounded-lg">Random</button></div></div>
+                        <div class="bg-yellow-900/40 p-3 rounded-xl"><p>Estimated Price: ₹<span id="pricePreview">0</span></p><p class="text-xs">💰 ₹75 per device/day (deducted from your balance)</p></div>
+                        <button id="generateKeyBtn" class="btn-gold w-full py-2 rounded-xl font-bold">GENERATE & DEDUCT</button>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card p-6"><h2 class="text-xl font-bold mb-3">My Keys</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-700/60"><tr><th>Key</th><th>Duration</th><th>Expiry</th><th>Max Dev</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminKeysTableBody"></tbody></table></div></div>
+        </div>
+    </div>
+
+    <script>
+        // Storage constants
+        const STORAGE_ADMINS = "krishna_key_admins";
+        const STORAGE_KEYS = "krishna_keys_all";
+        const OWNER_ID = "pushkar2006";
+        const OWNER_PASS = "8788296319";
+        const RECHARGE_LINK = "https://upilinks.in/payment-link/upi434794108";
+
+        // Helper functions
+        function loadAdmins() {
+            const data = localStorage.getItem(STORAGE_ADMINS);
+            return data ? JSON.parse(data) : [{ id: "admin_1", username: "admin1", password: "admin123", balance: 10000, createdAt: Date.now() }];
+        }
+        function saveAdmins(admins) { localStorage.setItem(STORAGE_ADMINS, JSON.stringify(admins)); }
+        function loadAllKeys() { return JSON.parse(localStorage.getItem(STORAGE_KEYS) || "[]"); }
+        function saveAllKeys(keys) { localStorage.setItem(STORAGE_KEYS, JSON.stringify(keys)); }
+
+        const PRICE_PER_DAY_PER_DEVICE = 75;
+        function computePrice(durationDays, maxDevices) { return durationDays * maxDevices * PRICE_PER_DAY_PER_DEVICE; }
+        function generateRandomKey() { return "KEY" + Math.random().toString(36).substring(2, 10).toUpperCase() + Math.floor(Math.random()*900); }
+        function isKeyUnique(keyStr, excludeId=null) { let keys = loadAllKeys(); if(excludeId) keys = keys.filter(k=>k.keyId!==excludeId); return !keys.some(k=>k.key===keyStr); }
+
+        function addKey(ownerOrAdminId, keyString, durationDays, maxDevices, priceDeducted, isOwner = false, customExpiry = null) {
+            let keys = loadAllKeys();
+            if(!isKeyUnique(keyString)) return false;
+            const now = Date.now();
+            const expiry = customExpiry || now + (durationDays * 86400000);
+            keys.push({
+                keyId: Date.now() + "_" + Math.random(),
+                ownerOrAdminId: ownerOrAdminId,
+                isOwnerKey: isOwner,
+                key: keyString,
+                durationDays, origDurationDays: durationDays, maxDevices, createdAt: now,
+                expiryTimestamp: expiry, blocked: false, priceAtGen: priceDeducted
+            });
+            saveAllKeys(keys);
+            return true;
+        }
+        function toggleBlockKey(keyId, blockStatus) { let keys=loadAllKeys(); let idx=keys.findIndex(k=>k.keyId===keyId); if(idx!==-1){keys[idx].blocked=blockStatus; saveAllKeys(keys); return true;} return false; }
+        function resetKeyExpiry(keyId) { let keys=loadAllKeys(); let idx=keys.findIndex(k=>k.keyId===keyId); if(idx!==-1 && !keys[idx].blocked){ keys[idx].expiryTimestamp = Date.now() + (keys[idx].origDurationDays*86400000); saveAllKeys(keys); return true;} return false; }
+        function deleteKey(keyId) { saveAllKeys(loadAllKeys().filter(k=>k.keyId!==keyId)); }
+
+        // Owner Panel Rendering (Unlimited: no balance deduction, display infinite)
+        function renderOwnerPanel() {
+            const admins = loadAdmins();
+            const container = document.getElementById("adminListContainer");
+            if(container){
+                container.innerHTML = "";
+                admins.forEach(admin => {
+                    const div = document.createElement("div");
+                    div.className = "bg-gray-800/70 p-3 rounded-lg flex flex-wrap justify-between items-center gap-2";
+                    div.innerHTML = `<div><i class="fas fa-user-circle"></i> <strong>${admin.username}</strong><br>₹${admin.balance}</div>
+                        <div class="flex gap-2 flex-wrap"><input type="number" id="balAdj_${admin.id}" placeholder="Amount" class="w-24 p-1 rounded bg-gray-700 text-sm">
+                        <button onclick="window.adjustAdminBalance('${admin.id}', 'add')" class="bg-green-700 px-2 py-1 rounded text-xs">+ Add</button>
+                        <button onclick="window.adjustAdminBalance('${admin.id}', 'subtract')" class="bg-red-700 px-2 py-1 rounded text-xs">- Deduct</button>
+                        <button onclick="window.deleteAdminAccount('${admin.id}')" class="bg-gray-600 px-2 py-1 rounded text-xs">Del</button></div>`;
+                    container.appendChild(div);
+                });
+            }
+            const allKeys = loadAllKeys();
+            const tbody = document.getElementById("globalKeysTableBody");
+            if(tbody){
+                tbody.innerHTML = "";
+                allKeys.forEach(k => {
+                    const expired = (k.expiryTimestamp < Date.now() && !k.blocked);
+                    let statusHtml = k.blocked ? '<span class="badge-blocked">Blocked</span>' : (expired ? '<span class="badge-expired">Expired</span>' : '<span class="badge-active">Active</span>');
+                    const ownerOrAdminName = k.isOwnerKey ? "👑 OWNER (Unlimited)" : (admins.find(a=>a.id===k.ownerOrAdminId)?.username || "Deleted Admin");
+                    const row = tbody.insertRow();
+                    row.innerHTML = `<td class="p-2 border-b font-mono">${k.key}</td><td class="p-2 border-b">${ownerOrAdminName}</td><td class="p-2 border-b">${k.durationDays} days</td>
+                        <td class="p-2 border-b text-xs">${new Date(k.expiryTimestamp).toLocaleString()}</td><td class="p-2 border-b">${k.maxDevices}</td>
+                        <td class="p-2 border-b">${statusHtml}</td>
+                        <td class="p-2 border-b text-center space-x-1"><button onclick="window.ownerToggleBlock('${k.keyId}', ${!k.blocked})" class="bg-yellow-600 text-xs px-2 py-1 rounded">${k.blocked?"Unblock":"Block"}</button>
+                        <button onclick="window.ownerResetKey('${k.keyId}')" class="bg-blue-600 text-xs px-2 py-1 rounded">Reset</button></td>`;
+                });
+            }
+        }
+
+        window.adjustAdminBalance = (adminId, type) => {
+            let amount = parseInt(document.getElementById(`balAdj_${adminId}`).value);
+            if(isNaN(amount)||amount<=0){Swal.fire("Error","Valid amount","error");return;}
+            let admins=loadAdmins(); let idx=admins.findIndex(a=>a.id===adminId);
+            if(idx!==-1){
+                if(type==='add') admins[idx].balance+=amount;
+                else admins[idx].balance=Math.max(0, admins[idx].balance-amount);
+                saveAdmins(admins); renderOwnerPanel(); Swal.fire("Updated",`${type==='add'?'Added':'Deducted'} ₹${amount}`,"success");
+            }
+        };
+        window.deleteAdminAccount = (adminId) => {
+            Swal.fire({title:"Delete Admin?",text:"All keys will be lost",icon:"warning",showCancelButton:true}).then(res=>{
+                if(res.isConfirmed){
+                    let admins=loadAdmins().filter(a=>a.id!==adminId);
+                    let keys=loadAllKeys().filter(k=>!(k.isOwnerKey===false && k.ownerOrAdminId===adminId));
+                    saveAdmins(admins); saveAllKeys(keys); renderOwnerPanel(); Swal.fire("Deleted","Admin removed","success");
+                }
+            });
+        };
+        window.ownerToggleBlock = (keyId, toBlock) => { toggleBlockKey(keyId, toBlock); renderOwnerPanel(); Swal.fire("Updated",`Key ${toBlock?"Blocked":"Unblocked"}`,"info"); };
+        window.ownerResetKey = (keyId) => { if(resetKeyExpiry(keyId)){ renderOwnerPanel(); Swal.fire("Reset","Key expiry extended","success");} else Swal.fire("Error","Cannot reset blocked","error"); };
+
+        // Owner Key Generation Logic (NO DEDUCTION, UNLIMITED)
+        function getOwnerDurationDays() {
+            let select = document.getElementById("ownerKeyDurationSelect");
+            if(select.value === "custom") return (parseInt(document.getElementById("ownerCustomMonthsInput").value)||1)*30;
+            return parseInt(select.value);
+        }
+        function refreshOwnerPrice() {
+            let days = getOwnerDurationDays();
+            let dev = parseInt(document.getElementById("ownerMaxDevicesInput").value)||1;
+            let normalPrice = computePrice(days, dev);
+            document.getElementById("ownerPricePreview").innerText = normalPrice;
+        }
+        async function handleOwnerGenerateKey() {
+            let days = getOwnerDurationDays();
+            let devices = parseInt(document.getElementById("ownerMaxDevicesInput").value)||1;
+            // Owner has unlimited balance – no deduction check
+            let keyStr = document.getElementById("ownerCustomKeyInput").value.trim();
+            if(!keyStr) keyStr = generateRandomKey();
+            if(!isKeyUnique(keyStr)) { Swal.fire("Duplicate Key","Use another or random","error"); return; }
+            const success = addKey("OWNER_MASTER", keyStr, days, devices, 0, true);
+            if(success){
+                document.getElementById("ownerCustomKeyInput").value = "";
+                Swal.fire("Success (Unlimited)", `Owner key "${keyStr}" generated! No cost.`, "success");
+                renderOwnerPanel();
+            } else {
+                Swal.fire("Error","Key generation failed (duplicate?)","error");
+            }
+        }
+
+        // Admin Panel Logic with Recharge Link on Insufficient Balance
+        let currentAdminId = null;
+        function renderAdminDashboard(adminObj) {
+            document.getElementById("adminNameSpan").innerText = adminObj.username;
+            document.getElementById("adminBalanceSpan").innerText = adminObj.balance;
+            const myKeys = loadAllKeys().filter(k => (!k.isOwnerKey) && k.ownerOrAdminId === adminObj.id);
+            const tbody = document.getElementById("adminKeysTableBody");
+            if(tbody){
+                tbody.innerHTML = "";
+                myKeys.forEach(key => {
+                    const expired = (!key.blocked && key.expiryTimestamp < Date.now());
+                    let status = key.blocked ? '<span class="badge-blocked">Blocked</span>' : (expired ? '<span class="badge-expired">Expired</span>' : '<span class="badge-active">Active</span>');
+                    const row = tbody.insertRow();
+                    row.innerHTML = `<td class="p-2 font-mono">${key.key}</td><td class="p-2">${key.durationDays} days</td><td class="p-2 text-xs">${new Date(key.expiryTimestamp).toLocaleString()}</td>
+                        <td class="p-2">${key.maxDevices}</td><td class="p-2">${status}</td>
+                        <td class="p-2 space-x-1"><button class="bg-orange-500 text-xs px-2 py-1 rounded" onclick="window.adminToggleBlock('${key.keyId}',${!key.blocked})">${key.blocked?"Unblock":"Block"}</button>
+                        <button class="bg-blue-500 text-xs px-2 py-1 rounded" onclick="window.adminResetKey('${key.keyId}')">Reset</button>
+                        <button class="bg-red-700 text-xs px-2 py-1 rounded" onclick="window.adminDeleteKey('${key.keyId}')">Del</button></td>`;
+                });
+            }
+        }
+        window.adminToggleBlock = (keyId, toBlock) => { toggleBlockKey(keyId, toBlock); let admin=loadAdmins().find(a=>a.id===currentAdminId); if(admin) renderAdminDashboard(admin); Swal.fire("Updated","","success"); };
+        window.adminResetKey = (keyId) => { if(resetKeyExpiry(keyId)){ let admin=loadAdmins().find(a=>a.id===currentAdminId); if(admin) renderAdminDashboard(admin); Swal.fire("Reset","Expiry renewed","success");} else Swal.fire("Error","Blocked key","error"); };
+        window.adminDeleteKey = (keyId) => { Swal.fire({title:"Delete?",icon:"warning",showCancelButton:true}).then(res=>{if(res.isConfirmed){deleteKey(keyId); let admin=loadAdmins().find(a=>a.id===currentAdminId); if(admin) renderAdminDashboard(admin); Swal.fire("Deleted","","info");}}); };
+
+        function getAdminDurationDays() {
+            let select = document.getElementById("keyDurationSelect");
+            if(select.value === "custom") return (parseInt(document.getElementById("customMonthsInput").value)||1)*30;
+            return parseInt(select.value);
+        }
+        function refreshAdminPrice() {
+            let days = getAdminDurationDays();
+            let dev = parseInt(document.getElementById("maxDevicesInput").value)||1;
+            document.getElementById("pricePreview").innerText = computePrice(days, dev);
+        }
+        
+        // Show recharge link popup when insufficient balance
+        function showInsufficientBalancePopup(requiredAmount, currentBalance) {
+            Swal.fire({
+                icon: 'error',
+                title: '⚠️ अपर्याप्त शेष राशि!',
+                html: `
+                    <div style="text-align: left;">
+                        <p><strong>आपके पास पर्याप्त बैलेंस नहीं है!</strong></p>
+                        <p>आवश्यक राशि: <strong style="color:#ffaa00;">₹${requiredAmount}</strong><br>
+                        आपका वर्तमान बैलेंस: <strong>₹${currentBalance}</strong></p>
+                        <p>कृपया रिचार्ज करें:</p>
+                        <a href="${RECHARGE_LINK}" target="_blank" style="display: inline-block; background: #25D366; color: white; padding: 10px 18px; border-radius: 40px; text-decoration: none; margin-top: 10px; font-weight: bold;">
+                            <i class="fas fa-rupee-sign"></i> रिचार्ज करें (UPI)
+                        </a>
+                        <p class="text-xs mt-3">👇 लिंक को कॉपी करें: <br> <span style="background:#00000080; padding:4px; border-radius:6px; word-break:break-all;">${RECHARGE_LINK}</span></p>
+                    </div>
+                `,
+                confirmButtonText: '✅ ठीक है',
+                confirmButtonColor: '#e68900',
+                backdrop: true,
+                allowOutsideClick: true
+            });
+        }
+
+        async function handleAdminGenerateKey() {
+            let admins = loadAdmins();
+            let admin = admins.find(a=>a.id===currentAdminId);
+            if(!admin) return;
+            let days = getAdminDurationDays();
+            let dev = parseInt(document.getElementById("maxDevicesInput").value)||1;
+            let price = computePrice(days, dev);
+            if(admin.balance < price) {
+                showInsufficientBalancePopup(price, admin.balance);
+                return;
+            }
+            let keyStr = document.getElementById("customKeyInput").value.trim();
+            if(!keyStr) keyStr = generateRandomKey();
+            if(!isKeyUnique(keyStr)) { Swal.fire("Duplicate Key","Try random or another key","error"); return; }
+            admin.balance -= price;
+            saveAdmins(admins);
+            let success = addKey(admin.id, keyStr, days, dev, price, false);
+            if(success){
+                document.getElementById("customKeyInput").value = "";
+                Swal.fire("Success",`Key ${keyStr} generated! ₹${price} deducted.`,"success");
+                let updated = loadAdmins().find(a=>a.id===currentAdminId);
+                renderAdminDashboard(updated);
+            } else {
+                // rollback deduction if key duplicate
+                admin.balance += price;
+                saveAdmins(admins);
+                Swal.fire("Error","Key generation failed (duplicate?)","error");
+            }
+        }
+
+        // Login & Event binding
+        function handleLogin() {
+            let user = document.getElementById("loginUsername").value.trim();
+            let pass = document.getElementById("loginPassword").value.trim();
+            if(user === OWNER_ID && pass === OWNER_PASS){
+                document.getElementById("loginSection").classList.add("hidden");
+                document.getElementById("ownerPanel").classList.remove("hidden");
+                document.getElementById("adminPanel").classList.add("hidden");
+                renderOwnerPanel();
+                return;
+            }
+            let admins = loadAdmins();
+            let found = admins.find(a=>a.username===user && a.password===pass);
+            if(found){
+                currentAdminId = found.id;
+                document.getElementById("loginSection").classList.add("hidden");
+                document.getElementById("adminPanel").classList.remove("hidden");
+                document.getElementById("ownerPanel").classList.add("hidden");
+                renderAdminDashboard(found);
+                refreshAdminPrice();
+                return;
+            }
+            Swal.fire({icon:"error",title:"बहनचोद चैट देख और पासवर्ड सही दाल",text:"Owner: pushkar2006 | Admin: admin1 / admin123",confirmButtonColor:"#e68900"});
+        }
+
+        document.getElementById("doLoginBtn").onclick = handleLogin;
+        document.getElementById("ownerLogoutBtn").onclick = ()=>{ document.getElementById("ownerPanel").classList.add("hidden"); document.getElementById("loginSection").classList.remove("hidden"); };
+        document.getElementById("adminLogoutBtn").onclick = ()=>{ document.getElementById("adminPanel").classList.add("hidden"); document.getElementById("loginSection").classList.remove("hidden"); currentAdminId=null; };
+        document.getElementById("createAdminBtn").onclick = ()=>{
+            let uname=document.getElementById("newAdminUser").value.trim(), pwd=document.getElementById("newAdminPass").value.trim(), bal=parseInt(document.getElementById("newAdminBal").value);
+            if(!uname||!pwd||isNaN(bal)){Swal.fire("Error","All fields","error");return;}
+            let admins=loadAdmins();
+            if(admins.some(a=>a.username===uname)){Swal.fire("Duplicate","Exists","error");return;}
+            admins.push({id:"admin_"+Date.now(), username:uname, password:pwd, balance:bal, createdAt:Date.now()});
+            saveAdmins(admins);
+            document.getElementById("newAdminUser").value=""; document.getElementById("newAdminPass").value="";
+            Swal.fire("Created",`Admin ${uname} added with ₹${bal}`,"success");
+            renderOwnerPanel();
+        };
+        // Owner key event bindings
+        document.getElementById("ownerKeyDurationSelect").addEventListener("change", function(){
+            document.getElementById("ownerCustomMonthsDiv").classList.toggle("hidden", this.value !== "custom");
+            refreshOwnerPrice();
+        });
+        document.getElementById("ownerMaxDevicesInput").addEventListener("input", refreshOwnerPrice);
+        document.getElementById("ownerCustomMonthsInput")?.addEventListener("input", refreshOwnerPrice);
+        document.getElementById("ownerGenRandomKeyBtn").onclick = ()=> document.getElementById("ownerCustomKeyInput").value = generateRandomKey();
+        document.getElementById("ownerGenerateKeyBtn").onclick = handleOwnerGenerateKey;
+        // Admin bindings
+        document.getElementById("keyDurationSelect").addEventListener("change", function(){
+            document.getElementById("customMonthsDiv").classList.toggle("hidden", this.value !== "custom");
+            refreshAdminPrice();
+        });
+        document.getElementById("maxDevicesInput").addEventListener("input", refreshAdminPrice);
+        document.getElementById("customMonthsInput")?.addEventListener("input", refreshAdminPrice);
+        document.getElementById("genRandomKeyBtn").onclick = ()=> document.getElementById("customKeyInput").value = generateRandomKey();
+        document.getElementById("generateKeyBtn").onclick = handleAdminGenerateKey;
+        document.getElementById("customMonthsDiv").classList.add("hidden");
+        document.getElementById("ownerCustomMonthsDiv").classList.add("hidden");
+        refreshAdminPrice(); refreshOwnerPrice();
+    </script>
+</body>
+</html>
